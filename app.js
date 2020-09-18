@@ -7,7 +7,7 @@ const cors = require('cors')
  */
 
 
-
+const loginRoute = require('./routes/authentication')
  /**
  * Middleware
  */
@@ -23,5 +23,6 @@ app.use(cors())
  */
 
 
+app.use('/api/auth', loginRoute)
 
 module.exports = app
