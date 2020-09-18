@@ -4,6 +4,8 @@
 Planering och strukturering av arbetet sker i Trello, arbeta utefter Git Flow.
 
 ## Instruktioner
+Utse en gruppledare som forkar det här repot och bjuder in de andra som collaborators.
+
 Ni ska bygga en BackEnd till en webbshop med en färdig FrontEnd.
 
 Repot innehåller en boilerplate för att komma igång.
