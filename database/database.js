@@ -14,8 +14,11 @@ switch(process.env.ENVIRONMENT){
         connect()
         break;
     case 'test':
+        console.log('inne i test');
         const {MongoMemoryServer} = require('mongodb-memory-server')
-        mongoDatabase = new MongoMemoryServer()
+        mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } )
+;
+        connect()
         break;
     case 'production':
     case 'staging':
@@ -42,14 +45,16 @@ async function connect(){
 }
 
 async function disconnect(){
+    console.log('disconnecting');
     if(process.env.ENVIRONMENT == 'test' || process.env.ENVIRONMENT == 'development'){
+        console.log('test iz stop');
         await mongoDatabase.stop()
     }
-    await mongoose.disconnect()
+    await mongoose.connection.close()
 }
 
 var UserSchema = new mongoose.Schema({
-    username: {
+    name: {
         type: String,
         required: true
     },
@@ -84,7 +89,7 @@ var UserSchema = new mongoose.Schema({
     }
 })
 
-const User = mongoose.model("User", UserSchema)
+const User = mongoose.model("users", UserSchema)
 
 module.exports = {
     connect, disconnect, User
