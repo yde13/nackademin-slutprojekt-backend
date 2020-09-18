@@ -1,15 +1,16 @@
 # Slutprojekt - Programmering BackEnd 2
 
 ## Arbetssätt
-Git Flow
-Agilt och Trello
-
-
+Planering och strukturering av arbetet sker i Trello, arbeta utefter Git Flow.
 
 ## Instruktioner
 Ni ska bygga en BackEnd till en webbshop med en färdig FrontEnd.
-Repot innehåller en boilerplate för att komma igång
 
+Repot innehåller en boilerplate för att komma igång.
+
+Boilerplaten har en public folder och en minimal express app som servar de statiska filerna.
+
+Starta servern och surfa in på den för att se FrontEnden.
 
 ## SINUS Webshop FrontEnd
 
@@ -100,4 +101,7 @@ Administratörer har en extra view där hen kan administrera produkter.
 
 ### VG-krav
 * Staging miljö i Heroku med en Mongo Atlas databas
+
+## Redovisning
+Fredag 25/9 knyter vi ihop hela kursen med redovisningar.
 
