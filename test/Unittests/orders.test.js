@@ -1,8 +1,7 @@
 const chai = require('chai')
 chai.should()
-const { disconnect } = require('../../database/database')
+const {disconnect, connect} = require('../../database/database')
 const { expect } = require('chai')
-const { connect } = require('mongoose')
 const orderModel = require('../../models/orderModel')
 
 describe('Test order models', () => {
@@ -26,5 +25,8 @@ describe('Test order models', () => {
         let response = await orderModel.getOrders()
         expect(response).to.be.an('array')
         expect(response[0]._doc).to.have.keys('_id', 'timeStamp', 'status', 'items', 'orderValue', '__v')
-    })    
+    }) 
+    after(async function () {
+        await disconnect()
+    });   
 })
