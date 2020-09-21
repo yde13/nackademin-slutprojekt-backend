@@ -9,7 +9,7 @@ const authenticationModel = require('../../models/authenticationModel')
 describe('Unit Tests for user(REGISTER)', () => {
     before(async function() {
         console.log('gör ansutningen till testdb');
-        await connect();
+        //await connect();
     })
     beforeEach(async function () {
 

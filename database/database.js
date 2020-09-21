@@ -17,7 +17,17 @@ switch(process.env.ENVIRONMENT){
     case 'test':
         console.log('inne i test');
         mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } );
-        
+        async function testConnect() {
+            let uri = await mongoDatabase.getUri()
+            console.log('connecting');
+            await mongoose.connect(uri, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                useFindAndModify: false,
+                useCreateIndex: true
+            })
+        }
+        testConnect()
         break;
     case 'production':
     case 'staging':
