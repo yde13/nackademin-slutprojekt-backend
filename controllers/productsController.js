@@ -1,46 +1,48 @@
 const model = require('../models/productsModel');
-const fs = require('fs');
-const path = require('path');
-
-
-
 
 module.exports = {
 
     getProductsController: async (req, res) => {
         const product = await model.getProductsModel()
 
-        res.json(product)
+        if (product) {
+            res.status(200).json(product)
+        } else {
+            res.status(401).json(product.msg)
+        }
     },
 
     getSingleProductController: async (req, res) => {
         let id = req.params.id
 
-        let profuct = await model.getSingleProductModel(id)
-        console.log('hm');
-        res.json(profuct)
+        let product = await model.getSingleProductModel(id)
+
+        if (product) {
+            res.status(200).json(product)
+        } else {
+            res.status(401).json(product.msg)
+        }
     },
 
     addProductsController: async (req, res) => {
-        try {
-            const product = {
-                title: req.body.title,
-                price: req.body.price,
-                shortDesc: req.body.shortDesc,
-                longDesc: req.body.longDesc,
-                imgFile: req.body.imgFile
-                // imgFile: fs.readFileSync(path.join(process.cwd() + '/public/img/' + req.body.imgFile)) //lös detta bror
-            }
-            
-            let result = await model.addProductsModel(product)
-            console.log(result);
 
-            res.json({product:result})
-        } catch (error) {
-            console.log(error);
-            
+        const product = {
+            title: req.body.title,
+            price: req.body.price,
+            shortDesc: req.body.shortDesc,
+            longDesc: req.body.longDesc,
+            imgFile: req.body.imgFile
         }
-       
+
+        let result = await model.addProductsModel(product)
+
+        if (result) {
+            res.status(200).json({ product: result })
+        } else {
+            res.status(401).json(result.msg)
+        }
+
+
     },
 
     editProductsController: async (req, res) => {
@@ -53,13 +55,23 @@ module.exports = {
             imgFile: req.body.imgFile,
         }
         const updatedProduct = await model.editProductsModel(id, product)
-        res.json(updatedProduct);
+
+        if (updatedProduct) {
+            res.status(200).json(updatedProduct)
+        } else {
+            res.status(401).json(updatedProduct.msg)
+        }
     },
 
     deleteProductsController: async (req, res) => {
         let id = req.params.id;
         let deleted = await model.deleteProductsModel(id)
-        res.json({data: deleted})
+
+        if (deleted) {
+            res.status(200).json({ data: deleted })
+        } else {
+            res.status(401).json(deleted.msg)
+        }
     },
 }
 
