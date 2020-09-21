@@ -16,9 +16,8 @@ switch(process.env.ENVIRONMENT){
     case 'test':
         console.log('inne i test');
         const {MongoMemoryServer} = require('mongodb-memory-server')
-        mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } )
-;
-        connect()
+        mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } );
+        
         break;
     case 'production':
     case 'staging':
@@ -35,7 +34,7 @@ switch(process.env.ENVIRONMENT){
 async function connect(){
     
     let uri = await mongoDatabase.getUri()
-    console.log(uri);
+    console.log('connecting');
     await mongoose.connect(uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -46,11 +45,12 @@ async function connect(){
 
 async function disconnect(){
     console.log('disconnecting');
+    await mongoose.connection.close()
     if(process.env.ENVIRONMENT == 'test' || process.env.ENVIRONMENT == 'development'){
         console.log('test iz stop');
         await mongoDatabase.stop()
     }
-    await mongoose.connection.close()
+    
 }
 
 var UserSchema = new mongoose.Schema({

@@ -1,15 +1,14 @@
 const chai = require('chai')
 chai.should()
-const {disconnect} = require('../../database/database')
+const {disconnect, connect} = require('../../database/database')
 const userModel = require('../../models/userModel')
 const { expect } = require('chai')
 const {getTestUsers} = require('../testdata')
-const { connect } = require('mongoose')
 const authenticationModel = require('../../models/authenticationModel')
 
 describe('Unit Tests for user(REGISTER)', () => {
     before(async function() {
-        
+        await connect();
     })
     beforeEach(async function () {
         await userModel.clearAllUsers()
@@ -54,7 +53,7 @@ describe('Unit Tests for user(REGISTER)', () => {
 
     })
     after(async function() {
-        disconnect()
+        await disconnect()
     })
 })
 
