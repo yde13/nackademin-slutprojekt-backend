@@ -20,12 +20,20 @@ switch(process.env.ENVIRONMENT){
         //connect()
         break;
     case 'production':
-    case 'staging':
         console.log('Inne i atlas conneciton');
         mongoDatabase = {
             // mongodb+srv://user:password@host/dbname
             getUri: async () => 
                 `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
+        }
+        connect()
+        break;
+    case 'staging':
+        console.log('Inne i atlas conneciton');
+        mongoDatabase = {
+            // mongodb+srv://user:password@host/dbname
+            getUri: async () => 
+                `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_TEST}?retryWrites=true&w=majority`
         }
         connect()
         break;
