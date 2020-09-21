@@ -95,8 +95,27 @@ var UserSchema = new mongoose.Schema({
         type: Array
     }
 })
- 
+
+var OrderSchema = new mongoose.Schema({
+    timeStamp: {
+        type: Date,
+        required: true
+    },
+    status: {
+        type: String,
+        required: true
+    },
+    items: {
+        type: Array
+    },
+    orderValue: {
+        type: Number,
+        required: true
+    }
+})
+
 const User = mongoose.model("users", UserSchema)
+const Order = mongoose.model("orders", OrderSchema)
 
 const ProductsSchema = new mongoose.Schema ({
     title: {
@@ -123,8 +142,7 @@ const ProductsSchema = new mongoose.Schema ({
 
 const Products = mongoose.model("Products", ProductsSchema)
 
-
 module.exports = {
-    connect, disconnect, User, Products
+    connect, disconnect, User, Products, Order
 }
 // mongodb+srv://madmonkey:<password>@cluster0.txazb.mongodb.net/<dbname>?retryWrites=true&w=majority

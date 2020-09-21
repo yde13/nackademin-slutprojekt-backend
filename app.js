@@ -9,6 +9,7 @@ const productsRoute = require('./routes/productsRoute')
 
 const loginRoute = require('./routes/authentication')
 const userRoute = require('./routes/user')
+const orderRoute = require('./routes/order')
  /**
  * Middleware
  */
@@ -27,5 +28,6 @@ app.use('/api', productsRoute)
 
 app.use('/api/auth', loginRoute)
 app.use('/api/register', userRoute)
+app.use('/api/orders', orderRoute)
 
 module.exports = app
