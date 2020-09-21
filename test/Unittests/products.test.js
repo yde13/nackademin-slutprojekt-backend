@@ -106,7 +106,10 @@ describe('Product', function () {
     })
     after(async function () {
         //await db.disconnect();
-        console.log('accessing after hook');
-        await disconnect()
+        // console.log('accessing after hook');
+        // await disconnect()
     });
+    afterEach(async function () {
+        await productsModel.clear()
+    })
 })

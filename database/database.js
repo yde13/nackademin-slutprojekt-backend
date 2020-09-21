@@ -42,7 +42,7 @@ switch(process.env.ENVIRONMENT){
 async function connect(){
     
     let uri = await mongoDatabase.getUri()
-    console.log(uri);
+    // console.log(uri);
     await mongoose.connect(uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -55,7 +55,6 @@ async function disconnect(){
     console.log('disconnecting');
     await mongoose.connection.close()
     if(process.env.ENVIRONMENT == 'test' || process.env.ENVIRONMENT == 'development'){
-        console.log('test iz stop');
         await mongoDatabase.stop()
     }
    
