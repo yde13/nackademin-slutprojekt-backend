@@ -57,9 +57,9 @@ describe('Unit Tests for user(REGISTER)', () => {
         expect(loginResult.user.adress.toJSON()).to.have.deep.keys('street', 'zip', 'city')
 
     })
-    after(async function() {
-        await disconnect()
-    })
+    // after(async function() {
+    //     await disconnect()
+    // })
 })
 
 
