@@ -6,6 +6,9 @@ const orderModel = require('../../models/orderModel')
 const authenticationModel = require('../../models/authenticationModel')
 
 describe('Test order models', () => {
+    before(async function() {
+        await connect();
+    })
     it('Should add an order with products to DB', async () => {
         const order = {
             timeStamp: Date.now(), 
@@ -23,5 +26,8 @@ describe('Test order models', () => {
         let response = await orderModel.getOrders()
         expect(response).to.be.an('array')
         expect(response[0]._doc).to.have.keys('_id', 'timeStamp', 'status', 'items', 'orderValue', '__v')
-    })
+    })    
+    after(async function () {
+        await disconnect()
+    });
 })
