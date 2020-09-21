@@ -50,7 +50,7 @@ describe('Integration tests for Users', function () {
         const loginPerson = {
             email: users[0].email,
             password: users[0].password
-        }
+        } 
         
         const res = await request(app)
         .post('/api/auth')
