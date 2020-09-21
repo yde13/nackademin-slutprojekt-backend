@@ -1,5 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
+const {MongoMemoryServer} = require('mongodb-memory-server')
 
 let mongoDatabase
 
@@ -15,7 +16,6 @@ switch(process.env.ENVIRONMENT){
         break;
     case 'test':
         console.log('inne i test');
-        const {MongoMemoryServer} = require('mongodb-memory-server')
         mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } );
         
         break;

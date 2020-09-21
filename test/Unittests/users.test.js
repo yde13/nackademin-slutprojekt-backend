@@ -7,8 +7,9 @@ const {getTestUsers} = require('../testdata')
 const authenticationModel = require('../../models/authenticationModel')
 
 describe('Unit Tests for user(REGISTER)', () => {
-    before(function() {
-        connect();
+    before(async function() {
+        console.log('gör ansutningen till testdb');
+        await connect();
     })
     beforeEach(async function () {
         await userModel.clearAllUsers()
