@@ -2,30 +2,32 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const {MongoMemoryServer} = require('mongodb-memory-server')
 let mongoDatabase
-mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } );
+let uri
+const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+}
+
 
 console.log(process.env.ENVIRONMENT);
 async function testConnect() {
+
     switch(process.env.ENVIRONMENT){
-        case 'development':
-            mongoDatabase = {
-                // mongodb+srv://user:password@host/dbname
-                getUri: async () => 
-                    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_TEST}?retryWrites=true&w=majority`
-            }
-            connect()
-            break;
         case 'test':
+            
             console.log('inne i test')
-    
-            let uri = await mongoDatabase.getUri()
-            console.log('connecting');
-            await mongoose.connect(uri, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                useFindAndModify: false,
-                useCreateIndex: true
-            })
+            mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } );
+            uri = await mongoDatabase.getUri()
+            console.log('connecting to ' , uri);
+            await mongoose.connect(uri, options)
+            break;
+
+        case 'development':
+            uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_TEST}?retryWrites=true&w=majority`;
+            await mongoose.connect(uri, options)
+            // connect()
             break;
         case 'production':
         case 'staging':
