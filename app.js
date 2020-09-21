@@ -7,12 +7,11 @@ const productsRoute = require('./routes/productsRoute')
  * Länka in routes här
  */
 
-
-
+const loginRoute = require('./routes/authentication')
+const userRoute = require('./routes/user')
  /**
  * Middleware
  */
-
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
@@ -26,5 +25,7 @@ app.use('/api', productsRoute)
  */
 
 
+app.use('/api/auth', loginRoute)
+app.use('/api/register', userRoute)
 
 module.exports = app
