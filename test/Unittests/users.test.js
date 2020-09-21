@@ -8,7 +8,7 @@ const authenticationModel = require('../../models/authenticationModel')
 
 describe('Unit Tests for user(REGISTER)', () => {
     before(async function() {
-        await connect();
+       // await connect();
     })
     beforeEach(async function () {
         await userModel.clearAllUsers()
