@@ -10,12 +10,13 @@ describe('Test order models', () => {
         const order = {
             timeStamp: Date.now(), 
             status: 'inProcess',
-            items: [],
+            items: ["1234", "5678"],
             orderValue: 999,
         }
         let response = await orderModel.addOrder(order)
         expect(response._doc).to.be.an('object')
         expect(response._doc).to.have.keys('_id', 'timeStamp', 'status', 'items', 'orderValue', '__v')
+        expect(response._doc.items[0]).to.be.an('string')
     })
 
     it('Should get all orders', async () => {
