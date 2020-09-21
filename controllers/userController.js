@@ -20,5 +20,5 @@ module.exports = {
             res.status(401).json({msg: 'Cannot add a admin'})
         }
        
-    }
+    } 
 }
