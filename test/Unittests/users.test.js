@@ -8,16 +8,13 @@ const authenticationModel = require('../../models/authenticationModel')
 
 describe('Unit Tests for user(REGISTER)', () => {
     before(async function() {
-        console.log('gör ansutningen till testdb');
         //await connect();
     })
     beforeEach(async function () {
-
-
-        console.log('!!!!!!!!!!!!!!!!!')
         await userModel.clearAllUsers()
     })
     it('should return true', async function ( ) {
+        console.log('inne i it');
         let yes = true
         expect(yes).to.be.equal(true)
     })
@@ -61,7 +58,7 @@ describe('Unit Tests for user(REGISTER)', () => {
 
     // })
     after(async function() {
-        await disconnect()
+        disconnect()
     })
 })
 
