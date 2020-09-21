@@ -1,9 +1,9 @@
 const chai = require('chai')
+chai.should()
 const { disconnect } = require('../../database/database')
 const { expect } = require('chai')
 const { connect } = require('mongoose')
 const orderModel = require('../../models/orderModel')
-const authenticationModel = require('../../models/authenticationModel')
 
 describe('Test order models', () => {
     before(async function() {
