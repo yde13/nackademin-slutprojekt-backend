@@ -17,7 +17,7 @@ module.exports = {
         let id = req.params.id
 
         let profuct = await model.getSingleProductModel(id)
-
+        console.log('hm');
         res.json(profuct)
     },
 
@@ -32,8 +32,10 @@ module.exports = {
                 // imgFile: fs.readFileSync(path.join(process.cwd() + '/public/img/' + req.body.imgFile)) //lös detta bror
             }
             
-            let result = model.addProductsModel(product)
-            res.json(result)
+            let result = await model.addProductsModel(product)
+            console.log(result);
+
+            res.json({product:result})
         } catch (error) {
             console.log(error);
             
@@ -50,13 +52,13 @@ module.exports = {
             longDesc: req.body.longDesc,
             imgFile: req.body.imgFile,
         }
-        const updatedProduct = model.editProductsModel(id, product)
+        const updatedProduct = await model.editProductsModel(id, product)
         res.json(updatedProduct);
     },
 
     deleteProductsController: async (req, res) => {
         let id = req.params.id;
-        let deleted = model.deleteProductsModel(id)
+        let deleted = await model.deleteProductsModel(id)
         res.json({data: deleted})
     },
 }
