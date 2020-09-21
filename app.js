@@ -28,6 +28,6 @@ app.use('/api', productsRoute)
 
 app.use('/api/auth', loginRoute)
 app.use('/api/register', userRoute)
-app.use('/api/order', orderRoute)
+app.use('/api/orders', orderRoute)
 
 module.exports = app
