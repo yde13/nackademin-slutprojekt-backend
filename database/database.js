@@ -16,8 +16,9 @@ switch(process.env.ENVIRONMENT){
         break;
     case 'test':
         console.log('inne i test');
-        mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } );
+        
         async function testConnect() {
+            mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } );
             let uri = await mongoDatabase.getUri()
             console.log('connecting');
             await mongoose.connect(uri, {
