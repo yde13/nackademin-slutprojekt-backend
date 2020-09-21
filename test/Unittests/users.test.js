@@ -16,6 +16,7 @@ describe('Unit Tests for user(REGISTER)', () => {
     })
     
     it('should add a user', async function () {
+        console.log('?????????');
         //Arrange -> fetch mochdata
         const users = await getTestUsers()
         console.log('adding a user');
