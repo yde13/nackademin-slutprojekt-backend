@@ -33,7 +33,7 @@ switch(process.env.ENVIRONMENT){
         mongoDatabase = {
             // mongodb+srv://user:password@host/dbname
             getUri: async () => 
-                `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_TEST}?retryWrites=true&w=majority`
+                `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
         }
         connect()
         break;
@@ -96,7 +96,7 @@ var UserSchema = new mongoose.Schema({
         type: Array
     }
 })
-
+ 
 const User = mongoose.model("users", UserSchema)
 
 const ProductsSchema = new mongoose.Schema ({
