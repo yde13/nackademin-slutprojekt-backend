@@ -1,6 +1,6 @@
 const userRouter = require('express').Router();
 const userController = require('../controllers/userController');
-// const {authorization} = require('../middlewares/authorization')
+ const {authorization} = require('../middlewares/authorization')
 
 // userRouter.get('/:userId', authorization, userController.getUser);
 
