@@ -2,49 +2,39 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const {MongoMemoryServer} = require('mongodb-memory-server')
 let mongoDatabase
-let uri
-const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-}
-
 
 console.log(process.env.ENVIRONMENT);
-async function testConnect() {
+switch(process.env.ENVIRONMENT){
+    case 'development':
+        mongoDatabase = {
+            // mongodb+srv://user:password@host/dbname
+            getUri: async () => 
+                `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_TEST}?retryWrites=true&w=majority`
+        }
+        connect()
+        break;
+    case 'test':
+        console.log('inne i test');
 
-    switch(process.env.ENVIRONMENT){
-        case 'test':
-            
-            console.log('inne i test')
-            mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } );
-            uri = await mongoDatabase.getUri()
-            console.log('connecting to ' , uri);
-            await mongoose.connect(uri, options)
-            break;
-
-        case 'development':
-            uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_TEST}?retryWrites=true&w=majority`;
-            await mongoose.connect(uri, options)
-            // connect()
-            break;
-        case 'production':
-        case 'staging':
-            console.log('Inne i atlas conneciton');
-            mongoDatabase = {
-                // mongodb+srv://user:password@host/dbname
-                getUri: async () => 
-                    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
-            }
-            connect()
-            break;
-    }
+        mongoDatabase = new MongoMemoryServer();
+        //connect()
+        break;
+    case 'production':
+    case 'staging':
+        console.log('Inne i atlas conneciton');
+        mongoDatabase = {
+            // mongodb+srv://user:password@host/dbname
+            getUri: async () => 
+                `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
+        }
+        connect()
+        break;
 }
-console.log('nu callas testconnect');
-testConnect()
+
 async function connect(){
+    
     let uri = await mongoDatabase.getUri()
+    console.log(uri);
     await mongoose.connect(uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -54,14 +44,13 @@ async function connect(){
 }
 
 async function disconnect(){
-    console.log('nu säger vi hejdå');
     console.log('disconnecting');
     await mongoose.connection.close()
     if(process.env.ENVIRONMENT == 'test' || process.env.ENVIRONMENT == 'development'){
         console.log('test iz stop');
         await mongoDatabase.stop()
     }
-    
+   
 }
 
 var UserSchema = new mongoose.Schema({
