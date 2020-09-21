@@ -54,10 +54,10 @@ module.exports = {
                 return this.role === 'admin'
             },
             isMember() {
-                return this.role === 'member'
+                return this.role === 'customer'
             },
-            isListCollaborator(document) {
-                return document.includes(this.userId)
+            isVisistor() {
+                return this.role === 'visitor'
             }
         }
    
