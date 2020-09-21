@@ -5,47 +5,46 @@ const {MongoMemoryServer} = require('mongodb-memory-server')
 let mongoDatabase
 
 console.log(process.env.ENVIRONMENT);
-switch(process.env.ENVIRONMENT){
-    case 'development':
-        mongoDatabase = {
-            // mongodb+srv://user:password@host/dbname
-            getUri: async () => 
-                `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_TEST}?retryWrites=true&w=majority`
-        }
-        connect()
-        break;
-    case 'test':
-        console.log('inne i test');
-        
-        async function testConnect() {
-            mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } );
-            let uri = await mongoDatabase.getUri()
-            console.log('connecting');
-            await mongoose.connect(uri, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                useFindAndModify: false,
-                useCreateIndex: true
-            })
-        }
-        testConnect()
-        break;
-    case 'production':
-    case 'staging':
-        console.log('Inne i atlas conneciton');
-        mongoDatabase = {
-            // mongodb+srv://user:password@host/dbname
-            getUri: async () => 
-                `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
-        }
-        connect()
-        break;
-}
+async function testConnect() {
+    switch(process.env.ENVIRONMENT){
+        case 'development':
+            mongoDatabase = {
+                // mongodb+srv://user:password@host/dbname
+                getUri: async () => 
+                    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_TEST}?retryWrites=true&w=majority`
+            }
+            connect()
+            break;
+        case 'test':
+            console.log('inne i test');
+                console.log('inne i testanslutningen');
+                mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } );
+                let uri = await mongoDatabase.getUri()
+                console.log('connecting');
+                await mongoose.connect(uri, {
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true,
+                    useFindAndModify: false,
+                    useCreateIndex: true
+                })
 
+            break;
+        case 'production':
+        case 'staging':
+            console.log('Inne i atlas conneciton');
+            mongoDatabase = {
+                // mongodb+srv://user:password@host/dbname
+                getUri: async () => 
+                    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
+            }
+            connect()
+            break;
+    }
+}
+console.log('nu callas testconnect');
+testConnect()
 async function connect(){
-    console.log(await mongoDatabase.getUri());
     let uri = await mongoDatabase.getUri()
-    console.log('connecting');
     await mongoose.connect(uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -55,6 +54,7 @@ async function connect(){
 }
 
 async function disconnect(){
+    console.log('nu säger vi hejdå');
     console.log('disconnecting');
     await mongoose.connection.close()
     if(process.env.ENVIRONMENT == 'test' || process.env.ENVIRONMENT == 'development'){
