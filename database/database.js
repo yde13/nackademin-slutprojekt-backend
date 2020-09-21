@@ -143,7 +143,6 @@ const ProductsSchema = new mongoose.Schema ({
 
 const Products = mongoose.model("Products", ProductsSchema)
 
-
 module.exports = {
     connect, disconnect, User, Products, Order
 }
