@@ -1,13 +1,14 @@
 const productsModel = require('../../models/productsModel')
 const db = require('../../database/database');
-const {disconnect, connect} = require('../../database/database')
 require('chai').should()
 
 describe('Product', function () {
     before(async function () {
-        await connect();
+        await db.connect();
     });
-
+    after(async function () {
+        await db.disconnect();
+    });
     beforeEach(async function () {
         await productsModel.clear()
     })
@@ -101,12 +102,7 @@ describe('Product', function () {
         let id = addProduct._id        
 
         const deleteProduct = await productsModel.deleteProductsModel(id)
-        //console.log(deleteProduct);
+
         deleteProduct.ok.should.equal(1) 
     })
-    after(async function () {
-        //await db.disconnect();
-        console.log('accessing after hook');
-        await disconnect()
-    });
 })

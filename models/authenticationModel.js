@@ -13,7 +13,11 @@ module.exports = {
         /**
          * Get user with email id: user._id.toString()
          */ 
+        // console.log('modellen och skickar vidare -->');
+        // console.log(loginObject);
         const user = await userModel.getUser({email: loginObject.email})
+        // console.log(user);
+        //console.log(user);
         if(user) {
             // If we get a match on the username -> check hashed pw
             const checkedPassword = bcrypt.compareSync(loginObject.password, user.password)
