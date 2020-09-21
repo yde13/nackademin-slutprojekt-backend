@@ -12,6 +12,9 @@ describe('Unit Tests for user(REGISTER)', () => {
         await connect();
     })
     beforeEach(async function () {
+
+
+        console.log('!!!!!!!!!!!!!!!!!')
         await userModel.clearAllUsers()
     })
     
