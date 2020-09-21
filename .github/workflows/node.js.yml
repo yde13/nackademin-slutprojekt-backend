@@ -27,9 +27,9 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
       env:
-          HOST: localhost
-          DATABASE: webshopTest
-          SECRET: 'ey boss'
+        HOST: localhost
+        DB_TEST: webshopTest
+        SECRET: 'ey boss'
 
   deploy_stage:
     needs: test
