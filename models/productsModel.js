@@ -48,6 +48,6 @@ module.exports = {
     },
 
     clear: async () => {
-        Products.deleteMany({}, {multi: true})
+       return await Products.deleteMany({}, {multi: true})
     }
 }

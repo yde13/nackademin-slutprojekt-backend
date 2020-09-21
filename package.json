@@ -12,6 +12,11 @@
     "type": "git",
     "url": "git+https://github.com/zocom-david-lundholm/nackademin-slutprojekt-backend.git"
   },
+  "config": {
+    "mongodbMemoryServer": {
+      "version": "4.4.1"
+    }
+  },
   "keywords": [],
   "author": "Icke-Micke",
   "license": "ISC",

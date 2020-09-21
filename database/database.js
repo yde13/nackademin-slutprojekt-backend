@@ -1,6 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-
+const {MongoMemoryServer} = require('mongodb-memory-server')
 let mongoDatabase
 
 console.log(process.env.ENVIRONMENT);
@@ -15,18 +15,25 @@ switch(process.env.ENVIRONMENT){
         break;
     case 'test':
         console.log('inne i test');
-        const {MongoMemoryServer} = require('mongodb-memory-server')
-        mongoDatabase = new MongoMemoryServer({ binary: { version: '4.4.1' } } )
-;
-        connect()
+
+        mongoDatabase = new MongoMemoryServer();
+        //connect()
         break;
     case 'production':
-    case 'staging':
         console.log('Inne i atlas conneciton');
         mongoDatabase = {
             // mongodb+srv://user:password@host/dbname
             getUri: async () => 
                 `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
+        }
+        connect()
+        break;
+    case 'staging':
+        console.log('Inne i atlas conneciton');
+        mongoDatabase = {
+            // mongodb+srv://user:password@host/dbname
+            getUri: async () => 
+                `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_TEST}?retryWrites=true&w=majority`
         }
         connect()
         break;
@@ -46,11 +53,12 @@ async function connect(){
 
 async function disconnect(){
     console.log('disconnecting');
+    await mongoose.connection.close()
     if(process.env.ENVIRONMENT == 'test' || process.env.ENVIRONMENT == 'development'){
         console.log('test iz stop');
         await mongoDatabase.stop()
     }
-    await mongoose.connection.close()
+   
 }
 
 var UserSchema = new mongoose.Schema({
@@ -88,7 +96,7 @@ var UserSchema = new mongoose.Schema({
         type: Array
     }
 })
-
+ 
 const User = mongoose.model("users", UserSchema)
 
 const ProductsSchema = new mongoose.Schema ({
