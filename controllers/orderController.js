@@ -11,24 +11,24 @@ module.exports = {
             }
             const response = await orderModel.addOrder(order)
             if (response) {
-                res.status(200).send(response)
+                res.status(200).json(response)
             } else {
-                res.status(400).send(response)
+                res.status(400).json(response)
             }
         } catch (err) {
-            res.status(500).send(err)
+            res.status(500).json(err)
         }
     },
     getOrders: async (req, res) => {
         try {
             const response = await orderModel.getOrders()
             if (response) {
-                res.status(200).send(response)
+                res.status(200).json(response)
             } else {
-                res.status(400).send(response)
+                res.status(400).json(response)
             }
         } catch (err) {
-            res.status(500).send(err)
+            res.status(500).json(err)
         }
     }
 }
