@@ -11,7 +11,8 @@ module.exports = {
         // console.log('controllern och skickar vidare -> ');
         // console.log(loginObject);
         const response = await authenticationModel.login(loginObject)
-        if(response) {
+        // console.log(response);
+        if(response.token) {
             // console.log(response)
             res.status(200).json(response)
         } else {

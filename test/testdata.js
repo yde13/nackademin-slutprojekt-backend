@@ -15,7 +15,7 @@ module.exports = {
             jonas = {
                 name: "jonas",
                 password: "123",
-                role: "admin",
+                role: "customer",
                 email: "jonas@hotmail.com",
                 adress: {
                     street: "Jonasstreet",

@@ -16,7 +16,7 @@ module.exports = {
         // console.log('modellen och skickar vidare -->');
         // console.log(loginObject);
         const user = await userModel.getUser({email: loginObject.email})
-        // console.log(loginObject.email + '1');
+        // console.log(user);
         //console.log(user);
         if(user) {
             // If we get a match on the username -> check hashed pw
