@@ -27,7 +27,4 @@ describe('Test order models', () => {
         expect(response).to.be.an('array')
         expect(response[0]._doc).to.have.keys('_id', 'timeStamp', 'status', 'items', 'orderValue', '__v')
     })    
-    after(async function () {
-        await disconnect()
-    });
 })
