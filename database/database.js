@@ -32,7 +32,7 @@ switch(process.env.ENVIRONMENT){
 }
 
 async function connect(){
-    console.log(mongoDatabase);
+    console.log(await mongoDatabase.getUri());
     let uri = await mongoDatabase.getUri()
     console.log('connecting');
     await mongoose.connect(uri, {
