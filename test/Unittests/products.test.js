@@ -5,7 +5,7 @@ require('chai').should()
 
 describe('Product', function () {
     before(async function () {
-        // await connect();
+        await connect();
     });
 
     beforeEach(async function () {
