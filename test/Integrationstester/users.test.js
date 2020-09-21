@@ -14,7 +14,7 @@ const { connect,disconnect } = require('../../database/database')
 describe('Integration tests for Users', function () {
     before(async function() {
         await connect()
-        await userModel.clearAllUsers()
+        // await userModel.clearAllUsers()
     })
     beforeEach(async function() {
         await userModel.clearAllUsers()
