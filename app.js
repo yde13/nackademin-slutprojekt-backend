@@ -8,6 +8,7 @@ const cors = require('cors')
 
 const loginRoute = require('./routes/authentication')
 const userRoute = require('./routes/user')
+const orderRoute = require('./routes/order')
  /**
  * Middleware
  */
@@ -24,5 +25,6 @@ app.use(cors())
 
 app.use('/api/auth', loginRoute)
 app.use('/api/register', userRoute)
+app.use('/api/order', orderRoute)
 
 module.exports = app
