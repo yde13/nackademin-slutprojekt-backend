@@ -106,6 +106,7 @@ describe('Product', function () {
     })
     after(async function () {
         //await db.disconnect();
+        console.log('accessing after');
         await disconnect()
     });
 })
