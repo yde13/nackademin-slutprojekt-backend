@@ -86,7 +86,33 @@ var UserSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", UserSchema)
 
+const ProductsSchema = new mongoose.Schema ({
+    title: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    shortDesc: {
+        type: String,
+        required: true
+    },
+    longDesc: {
+        type: String,
+        required: true
+    },
+    imgFile: {
+        type: String,
+        required: true
+    }
+})
+
+const Products = mongoose.model("Products", ProductsSchema)
+
+
 module.exports = {
-    connect, disconnect, User
+    connect, disconnect, User, Products
 }
 // mongodb+srv://madmonkey:<password>@cluster0.txazb.mongodb.net/<dbname>?retryWrites=true&w=majority
