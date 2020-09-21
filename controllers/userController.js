@@ -11,10 +11,12 @@ module.exports = {
         }
         if(user.role != 'admin') {
             let addedUser = await userModel.addUser(user)
+
             const loginObject = {
                 email: req.body.email,
                 password: req.body.password
             }
+   
             const response = await authenticationModel.login(loginObject)
             let status = addedUser ? 201 : 400
             let msg = addedUser ? 'New account created' : 'That username already exists'

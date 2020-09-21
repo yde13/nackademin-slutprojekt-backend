@@ -105,7 +105,7 @@ describe('Product', function () {
         deleteProduct.ok.should.equal(1) 
     })
     after(async function () {
-        //await db.disconnect();
+        // await db.disconnect();
         // console.log('accessing after hook');
         // await disconnect()
     });

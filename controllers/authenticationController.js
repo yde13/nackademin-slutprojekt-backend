@@ -8,6 +8,8 @@ module.exports = {
             email: req.body.email,
             password: req.body.password
         }
+        // console.log('controllern och skickar vidare -> ');
+        // console.log(loginObject);
         const response = await authenticationModel.login(loginObject)
         if(response) {
             // console.log(response)
