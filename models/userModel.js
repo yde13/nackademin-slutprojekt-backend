@@ -11,7 +11,9 @@ module.exports = {
             const checkIfExists = await User.findOne({email: user.email})
             // const checkIfOrders = await User.find({orderHistory})
             // if(checkIfOrders.length < 0) user.orderHistory[0] 
+            // console.log(checkIfExists);
             if(checkIfExists){
+                console.log('FANNS REDAN');
                 return false
             } 
             else {
