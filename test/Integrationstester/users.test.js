@@ -45,7 +45,6 @@ describe('Integration tests for Users', function () {
     })
     
     it('Should login with a user', async function() {
-        console.log(this.test.token);
         const users = await getTestUsers()
         const loginPerson = {
             email: users[0].email,
@@ -56,7 +55,6 @@ describe('Integration tests for Users', function () {
         .post('/api/auth')
         .send(loginPerson)
         .set('Authorization', `Bearer ${this.test.token}`)
-        console.log(res.body);
         expect(res).to.be.json
         expect(res).to.have.status(200)
      })
