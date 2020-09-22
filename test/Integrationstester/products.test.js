@@ -8,13 +8,13 @@ chai.use(chaiHttp)
 const { expect, request, should } = chai
 const app = require('../../app.js')
 
-describe('Integration test on tasks', () => {
+describe('Integration test on products', () => {
     let currentTest = {}
 
     const user = {
         name: 'yde',
         password: 'root',
-        role: "customer",
+        role: "admin",
         email: 'yde@root.se',
         adress: {
             street: 'kallevägen 11',
@@ -69,25 +69,55 @@ describe('Integration test on tasks', () => {
     })
 
     it('Should add products integration test', () => {
-        // Will add when auth middlewares are done
         let token = currentTest.token.token
+
+        let data = currentTest.product;
+        
+        request(app)
+            .post('/api/products')
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', `application/json`)
+            .send(data)
+            .end((err, res) => {                                
+                expect(res).to.have.status(200)
+                expect(res).to.be.json
+            })
 
     })
 
     it('Should edit products integration test', () => {
-        // Will add when auth middlewares are done
         let token = currentTest.token.token
 
+        let id = currentTest.product._id
 
-
+        let data = { title: 'Byxa' }
+        
+        request(app)
+            .patch(`/api/products/${id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', `application/json`)
+            .send(data)
+            .end((err, res) => {                
+                expect(res).to.have.status(200)
+                expect(res).to.be.json
+            })
     })
 
     it('Should delete products integration test', () => {
-        // Will add when auth middlewares are done
-        let token = currentTest.token.token
+        let token = currentTest.token.token;
 
+        let id = currentTest.product._id
 
-
+        let data = currentTest.product;
+        request(app)
+            .delete(`/api/products/${id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', `application/json`)
+            .send(data)
+            .end((err, res) => {
+                expect(res).to.have.status(200)
+                expect(res).to.be.json
+            })
     })
 
 })

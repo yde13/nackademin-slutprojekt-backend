@@ -35,41 +35,32 @@ describe('Integration tests for Users', function () {
     it('Should add a user and login, integration', async function() {
         const users = await getTestUsers()
        
-        request(app)
+        const res = await request(app)
         .post('/api/register')
         .send(users[1])
-        .end((err, res) => {
-            expect(res).to.be.json
-            expect(res).to.have.status(201)
-            expect(res.body).to.have.deep.property('token')
-            expect(res.body).to.have.deep.property('user')
-        })
+        expect(res).to.be.json
+        expect(res).to.have.status(201)
+        expect(res.body).to.have.deep.property('token')
+        expect(res.body).to.have.deep.property('user')
     })
     
-    // it('Should login with a user', async function() {
-    //     console.log(this.test.token);
-    //     const users = await getTestUsers()
-    //     const loginPerson = {
-    //         email: users[0].email,
-    //         password: users[0].password
-    //     }
-    //     request(app)
-    //     .post('/api/auth')
-    //     .send(loginPerson)
-    //     .set('Authorization', `Bearer ${this.test.token}`)
-    //     .end((err, res) => {
-    //         console.log(res.body);
-    //         expect(res).to.be.json
-    //         expect(res).to.have.status(401)
-    //     })
-    //  })
+    it('Should login with a user', async function() {
+        const users = await getTestUsers()
+        const loginPerson = {
+            email: users[0].email,
+            password: users[0].password
+        } 
+        
+        const res = await request(app)
+        .post('/api/auth')
+        .send(loginPerson)
+        .set('Authorization', `Bearer ${this.test.token}`)
+        expect(res).to.be.json
+        expect(res).to.have.status(200)
+     })
 
      after(async function() {
         await userModel.clearAllUsers()
-        // await disconnect()
+        await disconnect()
      })
-     afterEach(async function() {
-        // await userModel.clearAllUsers()
-     })
-
 })
