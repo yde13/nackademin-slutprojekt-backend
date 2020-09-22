@@ -41,7 +41,6 @@ module.exports = {
         }
     },
     verifyToken: async (token) => {
-        // console.log('verifierar token')
         const payload = jwt.verify(token, process.env.SECRET)
         return { 
             ...payload,
@@ -57,10 +56,10 @@ module.exports = {
             isAdmin(){
                 return this.role === 'admin'
             },
-            isMember() {
+            isCustomer() {
                 return this.role === 'customer'
             },
-            isVisistor() {
+            isVisitor() {
                 return this.role === 'visitor'
             }
         }

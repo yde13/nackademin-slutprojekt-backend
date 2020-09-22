@@ -34,18 +34,29 @@ module.exports = {
             imgFile: req.body.imgFile
         }
 
-        let result = await model.addProductsModel(product)
 
-        if (result) {
-            res.status(200).json({ product: result })
+        if(req.user.isAdmin()) {            
+            let result = await model.addProductsModel(product)
+            res.json({data: result})
+        } else if(req.user.isCustomer()) {
+            res.status(403).send('Unauthorized as a customer');
+        } else if(req.user.isVisitor({})) {
+            res.status(403).send('Unauthorized as a visitor');
         } else {
-            res.status(401).json(result.msg)
+            res.status(401).send('Something went wrong');
         }
+
+        // if (result) {
+        //     res.status(200).json({ product: result })
+        // } else {
+        //     res.status(401).json(result.msg)
+        // }
 
 
     },
 
     editProductsController: async (req, res) => {
+              
         var id = req.params.id;
         let product = {
             title: req.body.title,
@@ -54,24 +65,44 @@ module.exports = {
             longDesc: req.body.longDesc,
             imgFile: req.body.imgFile,
         }
-        const updatedProduct = await model.editProductsModel(id, product)
 
-        if (updatedProduct) {
-            res.status(200).json(updatedProduct)
+        if(req.user.isAdmin()) {            
+            const updatedProduct = await model.editProductsModel(id, product)
+            res.json({data: updatedProduct})
+        } else if(req.user.isCustomer()) {
+            res.status(403).send('Unauthorized as a customer');
+        } else if(req.user.isVisitor({})) {
+            res.status(403).send('Unauthorized as a visitor');
         } else {
-            res.status(401).json(updatedProduct.msg)
+            res.status(401).send('Something went wrong');
         }
+
+        // if (updatedProduct) {
+        //     res.status(200).json(updatedProduct)
+        // } else {
+        //     res.status(401).json(updatedProduct.msg)
+        // }
     },
 
     deleteProductsController: async (req, res) => {
         let id = req.params.id;
-        let deleted = await model.deleteProductsModel(id)
 
-        if (deleted) {
-            res.status(200).json({ data: deleted })
+        if(req.user.isAdmin()) {            
+            let deleted = await model.deleteProductsModel(id)
+            res.json({ data: deleted })
+        } else if(req.user.isCustomer()) {
+            res.status(403).send('Unauthorized as a customer');
+        } else if(req.user.isVisitor({})) {
+            res.status(403).send('Unauthorized as a visitor');
         } else {
-            res.status(401).json(deleted.msg)
+            res.status(401).send('Something went wrong');
         }
+
+        // if (deleted) {
+        //     res.status(200).json({ data: deleted })
+        // } else {
+        //     res.status(401).json(deleted.msg)
+        // }
     },
 }
 

@@ -1,4 +1,4 @@
-const { Order } = require('../database/database')
+const { Order, User } = require('../database/database')
 const bcrypt = require('bcryptjs')
 require('dotenv').config()
 
@@ -11,11 +11,27 @@ module.exports = {
             return err
         }
     },
-    getOrders: async () => {
+    getOrders: async (filter) => {
         try {
-            const query = await Order.find()
-            return query
+            let orderInfo = []
+            if(filter) {
+                const user = await User.find(filter)
+                let userOrdersIDS = user[0].orderHistory;
+                const allOrders = await Order.find()
+                for(let i = 0; i < allOrders.length; i++) {
+                    for(let x = 0; x < userOrdersIDS.length; x++) {
+                        if(userOrdersIDS[x] == allOrders[i]._id.toString()) {
+                            orderInfo.push(allOrders[i]) 
+                        }
+                    }
+                }
+            } 
+            else {
+                orderInfo = await Order.find()
+            }   
+        return orderInfo
         } catch (err) {
+            console.log(err);
             return err
         }
     }
