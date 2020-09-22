@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 
 module.exports = {
     authorization: async (req,res,next) => {
+        
         if(!req.headers.authorization) return res.status(403).json({msg:"failed the auth"})
         const token = req.headers.authorization.replace("Bearer ", "")
         try{
