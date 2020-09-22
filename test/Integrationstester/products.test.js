@@ -8,7 +8,7 @@ chai.use(chaiHttp)
 const { expect, request, should } = chai
 const app = require('../../app.js')
 
-describe('Integration test on tasks', () => {
+describe('Integration test on products', () => {
     let currentTest = {}
 
     const user = {
@@ -78,9 +78,7 @@ describe('Integration test on tasks', () => {
             .set('Authorization', `Bearer ${token}`)
             .set('Content-Type', `application/json`)
             .send(data)
-            .end((err, res) => {      
-                console.log(res);
-                          
+            .end((err, res) => {                                
                 expect(res).to.have.status(200)
                 expect(res).to.be.json
             })
