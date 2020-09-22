@@ -41,7 +41,6 @@ module.exports = {
         }
     },
     verifyToken: async (token) => {
-        // console.log('verifierar token')
         const payload = jwt.verify(token, process.env.SECRET)
         return { 
             ...payload,
