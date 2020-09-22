@@ -54,7 +54,6 @@ module.exports = {
         let totalSum = 0;
         try {
             let products = await Products.find();
-            console.log(products);
             for(let i = 0; i < products.length; i++) {
               for (let x = 0; x < productsArray.length; x++) {
                   if(products[i]._id == productsArray[x]) {
