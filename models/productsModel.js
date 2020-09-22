@@ -49,5 +49,22 @@ module.exports = {
 
     clear: async () => {
        return await Products.deleteMany({}, {multi: true}) 
+    },
+    calcOrderSum: async (productsArray) => {
+        let totalSum = 0;
+        try {
+            let products = await Products.find();
+            console.log(products);
+            for(let i = 0; i < products.length; i++) {
+              for (let x = 0; x < productsArray.length; x++) {
+                  if(products[i]._id == productsArray[x]) {
+                      totalSum += products[i].price
+                  }
+              }     
+            }
+            return totalSum
+        } catch (error) {
+            return error
+        }
     }
 }

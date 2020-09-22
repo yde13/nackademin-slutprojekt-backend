@@ -57,7 +57,7 @@ module.exports = {
             isAdmin(){
                 return this.role === 'admin'
             },
-            isMember() {
+            isCustomer() {
                 return this.role === 'customer'
             },
             isVisistor() {
