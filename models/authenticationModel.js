@@ -60,7 +60,7 @@ module.exports = {
             isCustomer() {
                 return this.role === 'customer'
             },
-            isVisistor() {
+            isVisitor() {
                 return this.role === 'visitor'
             }
         }

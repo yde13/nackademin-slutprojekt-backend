@@ -14,7 +14,7 @@ describe('Integration test on tasks', () => {
     const user = {
         name: 'yde',
         password: 'root',
-        role: "customer",
+        role: "admin",
         email: 'yde@root.se',
         adress: {
             street: 'kallevägen 11',
@@ -78,7 +78,9 @@ describe('Integration test on tasks', () => {
             .set('Authorization', `Bearer ${token}`)
             .set('Content-Type', `application/json`)
             .send(data)
-            .end((err, res) => {                
+            .end((err, res) => {      
+                console.log(res);
+                          
                 expect(res).to.have.status(200)
                 expect(res).to.be.json
             })
