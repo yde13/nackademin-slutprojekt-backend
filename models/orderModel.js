@@ -15,7 +15,6 @@ module.exports = {
         try {
             let orderInfo = []
             if(filter) {
-                console.log('Customer');
                 const user = await User.find(filter)
                 let userOrdersIDS = user[0].orderHistory;
                 const allOrders = await Order.find()
@@ -28,10 +27,8 @@ module.exports = {
                 }
             } 
             else {
-                console.log('Admin');
                 orderInfo = await Order.find()
             }   
-        console.log(orderInfo);
         return orderInfo
         } catch (err) {
             console.log(err);
