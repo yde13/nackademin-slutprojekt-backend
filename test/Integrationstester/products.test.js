@@ -69,25 +69,55 @@ describe('Integration test on tasks', () => {
     })
 
     it('Should add products integration test', () => {
-        // Will add when auth middlewares are done
         let token = currentTest.token.token
+
+        let data = currentTest.product;
+        
+        request(app)
+            .post('/api/products')
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', `application/json`)
+            .send(data)
+            .end((err, res) => {                
+                expect(res).to.have.status(200)
+                expect(res).to.be.json
+            })
 
     })
 
     it('Should edit products integration test', () => {
-        // Will add when auth middlewares are done
         let token = currentTest.token.token
 
+        let id = currentTest.product._id
 
-
+        let data = { title: 'Byxa' }
+        
+        request(app)
+            .patch(`/api/products/${id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', `application/json`)
+            .send(data)
+            .end((err, res) => {                
+                expect(res).to.have.status(200)
+                expect(res).to.be.json
+            })
     })
 
     it('Should delete products integration test', () => {
-        // Will add when auth middlewares are done
-        let token = currentTest.token.token
+        let token = currentTest.token.token;
 
+        let id = currentTest.product._id
 
-
+        let data = currentTest.product;
+        request(app)
+            .delete(`/api/products/${id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', `application/json`)
+            .send(data)
+            .end((err, res) => {
+                expect(res).to.have.status(200)
+                expect(res).to.be.json
+            })
     })
 
 })
