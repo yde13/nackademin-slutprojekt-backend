@@ -4,7 +4,6 @@ module.exports = {
 
     getProductsController: async (req, res) => {
         const product = await model.getProductsModel()
-
         if (product) {
             res.status(200).json(product)
         } else {
@@ -25,7 +24,6 @@ module.exports = {
     },
 
     addProductsController: async (req, res) => {
-
         const product = {
             title: req.body.title,
             price: req.body.price,
@@ -33,30 +31,17 @@ module.exports = {
             longDesc: req.body.longDesc,
             imgFile: req.body.imgFile
         }
-
-
+        
         if(req.user.isAdmin()) {            
             let result = await model.addProductsModel(product)
-            res.json({data: result})
-        } else if(req.user.isCustomer()) {
-            res.status(403).send('Unauthorized as a customer');
-        } else if(req.user.isVisitor({})) {
-            res.status(403).send('Unauthorized as a visitor');
+            result.message = "Product added"
+            res.status(200).json({product: result, message: "Product added"})
         } else {
-            res.status(401).send('Something went wrong');
+            res.status(401).send('You are not an Admin.');
         }
-
-        // if (result) {
-        //     res.status(200).json({ product: result })
-        // } else {
-        //     res.status(401).json(result.msg)
-        // }
-
-
     },
 
     editProductsController: async (req, res) => {
-              
         var id = req.params.id;
         let product = {
             title: req.body.title,
@@ -69,19 +54,9 @@ module.exports = {
         if(req.user.isAdmin()) {            
             const updatedProduct = await model.editProductsModel(id, product)
             res.json({data: updatedProduct})
-        } else if(req.user.isCustomer()) {
-            res.status(403).send('Unauthorized as a customer');
-        } else if(req.user.isVisitor({})) {
-            res.status(403).send('Unauthorized as a visitor');
         } else {
-            res.status(401).send('Something went wrong');
+            res.status(401).send('You are not an Admin.');
         }
-
-        // if (updatedProduct) {
-        //     res.status(200).json(updatedProduct)
-        // } else {
-        //     res.status(401).json(updatedProduct.msg)
-        // }
     },
 
     deleteProductsController: async (req, res) => {
@@ -90,19 +65,9 @@ module.exports = {
         if(req.user.isAdmin()) {            
             let deleted = await model.deleteProductsModel(id)
             res.json({ data: deleted })
-        } else if(req.user.isCustomer()) {
-            res.status(403).send('Unauthorized as a customer');
-        } else if(req.user.isVisitor({})) {
-            res.status(403).send('Unauthorized as a visitor');
         } else {
-            res.status(401).send('Something went wrong');
+            res.status(401).send('You are not an Admin.');
         }
-
-        // if (deleted) {
-        //     res.status(200).json({ data: deleted })
-        // } else {
-        //     res.status(401).json(deleted.msg)
-        // }
     },
 }
 
