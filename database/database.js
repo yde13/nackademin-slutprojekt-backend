@@ -51,7 +51,7 @@ async function connect(){
 }
 
 async function disconnect(){
-    // console.log('disconnecting');
+    console.log('disconnecting');
     await mongoose.connection.close()
     if(process.env.ENVIRONMENT == 'test' || process.env.ENVIRONMENT == 'development'){
         await mongoDatabase.stop()
