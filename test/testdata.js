@@ -44,7 +44,7 @@ module.exports = {
                     zip: "12844",
                     city: "JonasCity"
                 }
-            },            
+            },
             jonasexisting2 = {
                 name: "jonas",
                 password: "123",
@@ -67,6 +67,13 @@ module.exports = {
                 price: 100,
                 shortDesc: 'Krage',
                 longDesc: 'Fintröja med krage',
+                imgFile: 'something.png',
+            },
+            testProduct2 = {
+                title: 'Byxa',
+                price: 150,
+                shortDesc: 'Jeans',
+                longDesc: 'Fin byxa som är blå',
                 imgFile: 'something.png',
             }
         ]

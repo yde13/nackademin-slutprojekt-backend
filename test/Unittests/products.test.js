@@ -1,5 +1,6 @@
 const productsModel = require('../../models/productsModel')
 const db = require('../../database/database');
+const {getTestProducts} = require('../testdata')
 require('chai').should()
 
 describe('Product', function () {
@@ -14,15 +15,9 @@ describe('Product', function () {
     })
 
     it('Should get all products', async function () {
-        const product = {
-            title: 'Tröja',
-            price: 100,
-            shortDesc: 'Krage',
-            longDesc: 'Fintröja med krage',
-            imgFile: 'something.png',
-        }
-        
-        const result = await productsModel.addProductsModel(product)        
+       
+        const products = await getTestProducts()
+        const result = await productsModel.addProductsModel(products[0])        
 
         const getProducts = await productsModel.getProductsModel()        
         
@@ -32,14 +27,9 @@ describe('Product', function () {
     })
 
     it('Should get a single product', async function () {
-        const product = {
-            title: 'Tröja',
-            price: 100,
-            shortDesc: 'Krage',
-            longDesc: 'Fintröja med krage',
-            imgFile: 'something.png',
-        }
-        const result = await productsModel.addProductsModel(product)        
+        const products = await getTestProducts()
+
+        const result = await productsModel.addProductsModel(products[0])        
 
         let id = result._id
         
@@ -51,14 +41,9 @@ describe('Product', function () {
     })
 
     it('Should add a product', async function () {
-        const product = {
-            title: 'Tröja',
-            price: 100,
-            shortDesc: 'Krage',
-            longDesc: 'Fintröja med krage',
-            imgFile: 'something.png',
-        }
-        const addProduct = await productsModel.addProductsModel(product)
+        const products = await getTestProducts()
+
+        const addProduct = await productsModel.addProductsModel(products[0])
         
         addProduct.price.should.be.equal(100)
         addProduct.title.should.be.equal('Tröja')
@@ -66,38 +51,21 @@ describe('Product', function () {
     })
 
     it('Should edit a product', async function () {
-        const product = {
-            title: 'Tröja',
-            price: 100,
-            shortDesc: 'Krage',
-            longDesc: 'Fintröja med krage',
-            imgFile: 'something.png',
-        }
-        const addProduct = await productsModel.addProductsModel(product)
+        const products = await getTestProducts()
+
+        const addProduct = await productsModel.addProductsModel(products[0])
 
         let id = addProduct._id        
 
-        let newProduct = {
-            title: 'Byxa',
-            price: 150,
-            shortDesc: 'Jeans',
-            longDesc: 'Fin byxa som är blå',
-            imgFile: 'something.png',
-        }
-        const updateProduct = await productsModel.editProductsModel(id, newProduct)
+        const updateProduct = await productsModel.editProductsModel(id, products[1])
 
         updateProduct.ok.should.equal(1) 
     })
 
     it('Should delete a product', async function () {
-        const product = {
-            title: 'Tröja',
-            price: 100,
-            shortDesc: 'Krage',
-            longDesc: 'Fintröja med krage',
-            imgFile: 'something.png',
-        }
-        const addProduct = await productsModel.addProductsModel(product)
+        const products = await getTestProducts()
+
+        const addProduct = await productsModel.addProductsModel(products[0])
 
         let id = addProduct._id        
 
