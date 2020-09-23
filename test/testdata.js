@@ -71,6 +71,18 @@ module.exports = {
             }
         ]
         return products
+    },
+
+    getTestOrders: async () => {
+        const order = [
+            testOrder = {
+                timeStamp: Date.now(),
+                status: 'inProcess',
+                items: ["5f687048d6e69237c5d3c75b", "5f687081d6e69237c5d3c75c"],
+                orderValue: 1498,
+            }
+        ]
+        return order
     }
 
 }
