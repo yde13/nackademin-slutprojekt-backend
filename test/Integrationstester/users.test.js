@@ -59,7 +59,7 @@ describe('Integration tests for Users', function () {
 
      it('Should fail to register as admin, integration', async function() {
         const users = await getTestUsers()
-
+        
         const res = await request(app)
         .post('/api/register')
         .send(users[2])

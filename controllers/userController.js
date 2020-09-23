@@ -5,7 +5,7 @@ module.exports = {
         const user = {
             name: req.body.name,
             password: req.body.password,
-            role: "customer",
+            role: req.body.role || "customer",
             email: req.body.email,
             adress: req.body.adress
         }
@@ -34,6 +34,8 @@ module.exports = {
         }
 
         else {
+            console.log(req.body.role);
+            
             res.status(400).json({errormsg: 'Incorect register format'})
         }
        

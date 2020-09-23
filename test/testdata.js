@@ -1,5 +1,5 @@
 module.exports = {
-    getTestUsers: async() => {
+    getTestUsers: async () => {
         const users = [
             amanda = {
                 name: "Amanda",
@@ -24,10 +24,10 @@ module.exports = {
                 }
             },
             jonasfail = {
-                namee: "jonas",
-                passwordd: "123",
+                name: "jonas5",
+                password: "123",
                 role: "admin",
-                email: "jonas@hotmail.com",
+                email: "jonas5@hotmail.com",
                 adress: {
                     street: "Jonasstreet",
                     zip: "12844",
@@ -58,6 +58,19 @@ module.exports = {
             },
         ]
         return users
+    },
+
+    getTestProducts: async () => {
+        const products = [
+            testProduct1 = {
+                title: 'Tröja',
+                price: 100,
+                shortDesc: 'Krage',
+                longDesc: 'Fintröja med krage',
+                imgFile: 'something.png',
+            }
+        ]
+        return products
     }
 
 }
