@@ -16,7 +16,7 @@ describe('Unit Tests for user(REGISTER)', () => {
     it('should add a user', async function () {
         //Arrange -> fetch mochdata
         const users = await getTestUsers()
-        console.log('adding a user');
+        
         //Act -> Add users to db
  
         const amandaResult = await userModel.addUser(users[0])

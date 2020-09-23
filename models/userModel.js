@@ -9,6 +9,7 @@ module.exports = {
     addUser: async (user) => {
         try {
             const checkIfExists = await User.findOne({email: user.email})
+            
             if(checkIfExists){
                 return false
             } 

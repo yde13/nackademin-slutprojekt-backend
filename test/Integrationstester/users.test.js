@@ -27,8 +27,6 @@ describe('Integration tests for Users', function () {
         }
         this.currentTest.loginObject = loginObject
         const addedUser = await userModel.addUser(users[0])
-        // const addedUser2 = await userModel.addUser(users[1])
-
         this.currentTest.token = await authenticationModel.login(loginObject)
         
     })
@@ -58,6 +56,29 @@ describe('Integration tests for Users', function () {
         expect(res).to.be.json
         expect(res).to.have.status(200)
      })
+
+     it('Should fail to register as admin, integration', async function() {
+        const users = await getTestUsers()
+
+        const res = await request(app)
+        .post('/api/register')
+        .send(users[2])
+        expect(res).to.be.json
+        expect(res).to.have.status(400)
+        expect(res.body).to.have.deep.property('errormsg')
+    })
+
+    it('Should fail to register with existing email, integration', async function() {
+        const users = await getTestUsers()
+        const addedUser = await userModel.addUser(users[3])
+
+        const res = await request(app)
+        .post('/api/register')
+        .send(users[3])
+        expect(res).to.be.json
+        expect(res).to.have.status(400)
+        expect(res.body).to.have.deep.property('errormsg')
+    })
 
      after(async function() {
         await userModel.clearAllUsers()
