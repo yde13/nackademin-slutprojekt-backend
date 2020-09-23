@@ -1,5 +1,5 @@
 module.exports = {
-    getTestUsers: async() => {
+    getTestUsers: async () => {
         const users = [
             amanda = {
                 name: "Amanda",
@@ -23,8 +23,32 @@ module.exports = {
                     city: "JonasCity"
                 }
             },
+            yde = {
+                name: 'yde',
+                password: 'root',
+                role: "admin",
+                email: 'yde@root.se',
+                adress: {
+                    street: 'kallevägen 11',
+                    zip: '1337',
+                    city: 'blåkulla'
+                }
+            }
         ]
         return users
+    },
+
+    getTestProducts: async () => {
+        const products = [
+            testProduct1 = {
+                title: 'Tröja',
+                price: 100,
+                shortDesc: 'Krage',
+                longDesc: 'Fintröja med krage',
+                imgFile: 'something.png',
+            }
+        ]
+        return products
     }
 
 }

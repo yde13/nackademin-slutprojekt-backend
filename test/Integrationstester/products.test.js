@@ -7,29 +7,11 @@ const chaiHttp = require('chai-http')
 chai.use(chaiHttp)
 const { expect, request, should } = chai
 const app = require('../../app.js')
+const {getTestUsers, getTestProducts} = require('../testdata')
 
 describe('Integration test on products', () => {
     let currentTest = {}
 
-    const user = {
-        name: 'yde',
-        password: 'root',
-        role: "admin",
-        email: 'yde@root.se',
-        adress: {
-            street: 'kallevägen 11',
-            zip: '1337',
-            city: 'blåkulla'
-        }
-    }
-
-    const product = {
-        title: 'Tröja',
-        price: 100,
-        shortDesc: 'Krage',
-        longDesc: 'Fintröja med krage',
-        imgFile: 'something.png',
-    }
     before(async function () {
         await db.connect();
     });
@@ -39,85 +21,135 @@ describe('Integration test on products', () => {
     before(async () => {
         await productModel.clear()
 
+        const users = await getTestUsers()
+        const products = await getTestProducts()
+
         let loginObj = {
-            email: user.email,
-            password: user.password
+            email: users[2].email,
+            password: users[2].password
         }
 
-        currentTest.user = await userModel.addUser(user)
-        
-        currentTest.product = await productModel.addProductsModel(product)
-        
+        currentTest.user = await userModel.addUser(users[2])        
+
+        currentTest.product = await productModel.addProductsModel(products[0])
+
         currentTest.userID = currentTest.user._id
-                
-        currentTest.token = await authenticationModel.login(loginObj)            
+
+        currentTest.token = await authenticationModel.login(loginObj)
 
     })
 
-    it('Should get products integration test', () => {
+    it('Should get products integration test', async () => {
 
         let data = currentTest.product;
-        
-        request(app)
+
+        const res = await request(app)
             .get('/api/products')
             .set('Content-Type', `application/json`)
             .send(data)
-            .end((err, res) => {
-                expect(res).to.have.status(200)
-                expect(res).to.be.json
-            })
+
+            expect(res).to.have.status(200)
+            expect(res).to.be.json
     })
 
-    it('Should add products integration test', () => {
+    it('Should add products integration test', async () => {
         let token = currentTest.token.token
 
         let data = currentTest.product;
-        
-        request(app)
+
+        const res = await request(app)
             .post('/api/products')
             .set('Authorization', `Bearer ${token}`)
             .set('Content-Type', `application/json`)
             .send(data)
-            .end((err, res) => {                                
-                expect(res).to.have.status(200)
-                expect(res).to.be.json
-            })
+
+            expect(res).to.have.status(200)
+            expect(res).to.be.json
 
     })
 
-    it('Should edit products integration test', () => {
+    it('Should edit products integration test', async () => {
         let token = currentTest.token.token
 
         let id = currentTest.product._id
 
         let data = { title: 'Byxa' }
-        
-        request(app)
+
+        const res = await request(app)
             .patch(`/api/products/${id}`)
             .set('Authorization', `Bearer ${token}`)
             .set('Content-Type', `application/json`)
             .send(data)
-            .end((err, res) => {                
-                expect(res).to.have.status(200)
-                expect(res).to.be.json
-            })
+
+            expect(res).to.have.status(200)
+            expect(res).to.be.json
+
     })
 
-    it('Should delete products integration test', () => {
+    it('Should delete products integration test', async () => {
         let token = currentTest.token.token;
 
         let id = currentTest.product._id
 
         let data = currentTest.product;
-        request(app)
+        const res = await request(app)
             .delete(`/api/products/${id}`)
             .set('Authorization', `Bearer ${token}`)
             .set('Content-Type', `application/json`)
             .send(data)
-            .end((err, res) => {
-                expect(res).to.have.status(200)
-                expect(res).to.be.json
-            })
+
+            expect(res).to.have.status(200)
+            expect(res).to.be.json
+    })
+
+    it('Should fail delete product, integration test', async () => {
+        let token = 'fakeToken';
+
+        let id = currentTest.product._id
+
+        let data = currentTest.product;
+        const res = await request(app)
+            .delete(`/api/products/${id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', `application/json`)
+            .send(data)
+
+            expect(res).to.have.status(403)
+            expect(res).to.be.json
+    })
+
+    it('Should fail edit product, integration test', async () => {
+        let token = 'fakeToken';
+
+        let id = currentTest.product._id
+
+        let data = { title: 'Byxa' }
+
+        const res = await request(app)
+            .patch(`/api/products/${id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', `application/json`)
+            .send(data)
+
+            expect(res).to.have.status(403)
+            expect(res).to.be.json
+
+    })
+
+    it('Should fail add product, integration test', async () => {
+        let token = 'fakeToken';
+
+        let data = currentTest.product;
+
+        const res = await request(app)
+            .post('/api/products')
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', `application/json`)
+            .send(data)
+
+            expect(res).to.have.status(403)
+            expect(res).to.be.json
+
     })
 
 })
