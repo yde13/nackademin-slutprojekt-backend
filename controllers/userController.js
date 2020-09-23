@@ -18,7 +18,7 @@ module.exports = {
 
             let addedUser = await userModel.addUser(user)
             if(!addedUser) {
-                return res.status(400).json({errormsg: 'Email already exists'})
+                return res.status(400).json({message: 'Email already exists'})
             }
 
             const response = await authenticationModel.login(loginObject)
@@ -34,8 +34,6 @@ module.exports = {
         }
 
         else {
-            console.log(req.body.role);
-            
             res.status(400).json({errormsg: 'Incorect register format'})
         }
        

@@ -4,7 +4,6 @@ module.exports = {
 
     getProductsController: async (req, res) => {
         const product = await model.getProductsModel()
-
         if (product) {
             res.status(200).json(product)
         } else {
@@ -25,7 +24,6 @@ module.exports = {
     },
 
     addProductsController: async (req, res) => {
-
         const product = {
             title: req.body.title,
             price: req.body.price,
@@ -33,18 +31,17 @@ module.exports = {
             longDesc: req.body.longDesc,
             imgFile: req.body.imgFile
         }
-
-
+        
         if(req.user.isAdmin()) {            
             let result = await model.addProductsModel(product)
-            res.json({data: result})
+            result.message = "Product added"
+            res.status(200).json({product: result, message: "Product added"})
         } else {
             res.status(401).send('You are not an Admin.');
         }
     },
 
     editProductsController: async (req, res) => {
-              
         var id = req.params.id;
         let product = {
             title: req.body.title,
