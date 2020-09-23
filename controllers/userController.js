@@ -5,11 +5,11 @@ module.exports = {
         const user = {
             name: req.body.name,
             password: req.body.password,
-            role: "customer",
+            role: req.body.role || "customer",
             email: req.body.email,
             adress: req.body.adress
         }
-        if(user.role != 'admin') {
+        if(user.role != 'admin' && req.body.password && req.body.email) {
             
             const loginObject = {
                 email: user.email,
@@ -17,6 +17,9 @@ module.exports = {
             }
 
             let addedUser = await userModel.addUser(user)
+            if(!addedUser) {
+                return res.status(400).json({errormsg: 'Email already exists'})
+            }
 
             const response = await authenticationModel.login(loginObject)
 
@@ -31,7 +34,9 @@ module.exports = {
         }
 
         else {
-            res.status(401).json({msg: 'Cannot add a admin'})
+            console.log(req.body.role);
+            
+            res.status(400).json({errormsg: 'Incorect register format'})
         }
        
     } 

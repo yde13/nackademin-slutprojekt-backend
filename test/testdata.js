@@ -23,17 +23,39 @@ module.exports = {
                     city: "JonasCity"
                 }
             },
-            yde = {
-                name: 'yde',
-                password: 'root',
+            jonasfail = {
+                name: "jonas5",
+                password: "123",
                 role: "admin",
-                email: 'yde@root.se',
+                email: "jonas5@hotmail.com",
                 adress: {
-                    street: 'kallevägen 11',
-                    zip: '1337',
-                    city: 'blåkulla'
+                    street: "Jonasstreet",
+                    zip: "12844",
+                    city: "JonasCity"
                 }
-            }
+            },
+            jonasexisting1 = {
+                name: "jonas",
+                password: "123",
+                role: "admin",
+                email: "jonas1@hotmail.com",
+                adress: {
+                    street: "Jonasstreet",
+                    zip: "12844",
+                    city: "JonasCity"
+                }
+            },            
+            jonasexisting2 = {
+                name: "jonas",
+                password: "123",
+                role: "admin",
+                email: "jonas1@hotmail.com",
+                adress: {
+                    street: "Jonasstreet",
+                    zip: "12844",
+                    city: "JonasCity"
+                }
+            },
         ]
         return users
     },
