@@ -51,7 +51,6 @@ describe('Integration test for orders', () => {
         const query = await chai.request(app)
             .get('/api/orders')
             .set('Authorization', `Bearer ${currentUser.token}`)
-            console.log(query.body)
             expect(query).to.have.status(200)
             expect(query.body[0]).to.have.keys('items', '_id', 'timeStamp', 'status', 'orderValue', '__v')
     })
