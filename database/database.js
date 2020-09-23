@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const {MongoMemoryServer} = require('mongodb-memory-server')
 let mongoDatabase
 
-console.log(process.env.ENVIRONMENT);
+// console.log(process.env.ENVIRONMENT);
 switch(process.env.ENVIRONMENT){
     case 'development':
         mongoDatabase = {
@@ -14,13 +14,13 @@ switch(process.env.ENVIRONMENT){
         connect()
         break;
     case 'test':
-        console.log('inne i test');
+        // console.log('inne i test');
 
         mongoDatabase = new MongoMemoryServer();
         //connect()
         break;
     case 'production':
-        console.log('Inne i atlas conneciton');
+        // console.log('Inne i atlas conneciton');
         mongoDatabase = {
             // mongodb+srv://user:password@host/dbname
             getUri: async () => 
@@ -29,7 +29,7 @@ switch(process.env.ENVIRONMENT){
         connect()
         break;
     case 'staging':
-        console.log('Inne i atlas conneciton');
+        // console.log('Inne i atlas conneciton');
         mongoDatabase = {
             // mongodb+srv://user:password@host/dbname
             getUri: async () => 
@@ -42,7 +42,6 @@ switch(process.env.ENVIRONMENT){
 async function connect(){
     
     let uri = await mongoDatabase.getUri()
-    // console.log(uri);
     await mongoose.connect(uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,

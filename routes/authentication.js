@@ -3,7 +3,7 @@ const authenticationController = require('../controllers/authenticationControlle
 
 const { authorization } = require('../middlewares/authorization')
 
-authenticationRouter.get('/checkToken', authorization, authenticationController.checkToken);
+// authenticationRouter.get('/checkToken', authorization, authenticationController.checkToken);
 
 authenticationRouter.post('/', authenticationController.login);
 

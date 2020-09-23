@@ -4,6 +4,7 @@ module.exports = {
             amanda = {
                 name: "Amanda",
                 password: "123",
+                repeatPassword: "123",
                 role: "customer",
                 email: "Amanda@hotmail.com",
                 adress: {
@@ -15,6 +16,7 @@ module.exports = {
             jonas = {
                 name: "jonas",
                 password: "123",
+                repeatPassword: "123",
                 role: "customer",
                 email: "jonas@hotmail.com",
                 adress: {
@@ -26,6 +28,7 @@ module.exports = {
             jonasfail = {
                 name: "jonas5",
                 password: "123",
+                repeatPassword: "123",
                 role: "admin",
                 email: "jonas5@hotmail.com",
                 adress: {
@@ -37,6 +40,7 @@ module.exports = {
             jonasexisting1 = {
                 name: "jonas",
                 password: "123",
+                repeatPassword: "123",
                 role: "admin",
                 email: "jonas1@hotmail.com",
                 adress: {
@@ -44,10 +48,11 @@ module.exports = {
                     zip: "12844",
                     city: "JonasCity"
                 }
-            },            
+            },
             jonasexisting2 = {
                 name: "jonas",
                 password: "123",
+                repeatPassword: "123",
                 role: "admin",
                 email: "jonas1@hotmail.com",
                 adress: {
@@ -67,6 +72,13 @@ module.exports = {
                 price: 100,
                 shortDesc: 'Krage',
                 longDesc: 'Fintröja med krage',
+                imgFile: 'something.png',
+            },
+            testProduct2 = {
+                title: 'Byxa',
+                price: 150,
+                shortDesc: 'Jeans',
+                longDesc: 'Fin byxa som är blå',
                 imgFile: 'something.png',
             }
         ]
