@@ -136,6 +136,9 @@ const ProductsSchema = new mongoose.Schema ({
     imgFile: {
         type: String,
         required: true
+    },
+    serial: {
+        type: String
     }
 })
 

@@ -29,7 +29,8 @@ module.exports = {
             price: req.body.price,
             shortDesc: req.body.shortDesc,
             longDesc: req.body.longDesc,
-            imgFile: req.body.imgFile
+            imgFile: req.body.imgFile,
+            serial: req.body.serial
         }
         
         if(req.user.isAdmin()) {            
@@ -49,6 +50,7 @@ module.exports = {
             shortDesc: req.body.shortDesc,
             longDesc: req.body.longDesc,
             imgFile: req.body.imgFile,
+            serial: req.body.serial
         }
 
         if(req.user.isAdmin()) {            
