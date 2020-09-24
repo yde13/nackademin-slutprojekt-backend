@@ -1,46 +1,39 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const {MongoMemoryServer} = require('mongodb-memory-server')
+const { MongoMemoryServer } = require('mongodb-memory-server')
 let mongoDatabase
 
-// console.log(process.env.ENVIRONMENT);
-switch(process.env.ENVIRONMENT){
+switch (process.env.ENVIRONMENT) {
     case 'development':
+
         mongoDatabase = {
-            // mongodb+srv://user:password@host/dbname
-            getUri: async () => 
+            getUri: async () =>
                 `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_TEST}?retryWrites=true&w=majority`
         }
         connect()
         break;
     case 'test':
-        // console.log('inne i test');
 
         mongoDatabase = new MongoMemoryServer();
-        //connect()
         break;
     case 'production':
-        // console.log('Inne i atlas conneciton');
         mongoDatabase = {
-            // mongodb+srv://user:password@host/dbname
-            getUri: async () => 
+            getUri: async () =>
                 `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
         }
         connect()
         break;
     case 'staging':
-        // console.log('Inne i atlas conneciton');
         mongoDatabase = {
-            // mongodb+srv://user:password@host/dbname
-            getUri: async () => 
+            getUri: async () =>
                 `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
         }
         connect()
         break;
 }
 
-async function connect(){
-    
+async function connect() {
+
     let uri = await mongoDatabase.getUri()
     await mongoose.connect(uri, {
         useNewUrlParser: true,
@@ -50,13 +43,12 @@ async function connect(){
     })
 }
 
-async function disconnect(){
-    console.log('disconnecting');
+async function disconnect() {
+
     await mongoose.connection.close()
-    if(process.env.ENVIRONMENT == 'test' || process.env.ENVIRONMENT == 'development'){
+    if (process.env.ENVIRONMENT == 'test' || process.env.ENVIRONMENT == 'development') {
         await mongoDatabase.stop()
     }
-   
 }
 
 var UserSchema = new mongoose.Schema({
@@ -95,6 +87,8 @@ var UserSchema = new mongoose.Schema({
     }
 })
 
+const User = mongoose.model("users", UserSchema)
+
 var OrderSchema = new mongoose.Schema({
     timeStamp: {
         type: Date,
@@ -113,10 +107,9 @@ var OrderSchema = new mongoose.Schema({
     }
 })
 
-const User = mongoose.model("users", UserSchema)
 const Order = mongoose.model("orders", OrderSchema)
 
-const ProductsSchema = new mongoose.Schema ({
+const ProductsSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -147,4 +140,3 @@ const Products = mongoose.model("Products", ProductsSchema)
 module.exports = {
     connect, disconnect, User, Products, Order
 }
-// mongodb+srv://madmonkey:<password>@cluster0.txazb.mongodb.net/<dbname>?retryWrites=true&w=majority

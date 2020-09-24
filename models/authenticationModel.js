@@ -10,15 +10,13 @@ async function createToken (payload) {
 
 module.exports = {
     login: async (loginObject) => {
-        /**
-         * Get user with email id: user._id.toString()
-         */ 
-
+        
         const user = await userModel.getUser({email: loginObject.email})
 
         if(user) {
             // If we get a match on the username -> check hashed pw
             const checkedPassword = bcrypt.compareSync(loginObject.password, user.password)
+
             // If we get a match on the password -> return a token to the client
             if(checkedPassword) {
                 let token = await createToken({userId: user._id, role: user.role, name: user.name, email: user.email})
@@ -31,25 +29,16 @@ module.exports = {
                         adress: user.adress
                 }}
             } else {
-                return {msg: 'wrong password'}
+                return {msg: 'Wrong password'}
             }
         } else {
-            return {msg: 'wrong email'}
+            return {msg: 'Wrong email'}
         }
     },
     verifyToken: async (token) => {
         const payload = jwt.verify(token, process.env.SECRET)
         return { 
             ...payload,
-            owns(document) {
-                return document.userid === this.userId
-            },
-            isme(id) {
-                return id === this.userId
-            },
-            isOwner(document){
-                return document._id == this.userId
-            },
             isAdmin(){
                 return this.role === 'admin'
             },
@@ -60,6 +49,5 @@ module.exports = {
                 return this.role === 'visitor'
             }
         }
-   
     }
 }

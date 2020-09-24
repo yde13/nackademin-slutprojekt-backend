@@ -1,5 +1,4 @@
 const { Order, User } = require('../database/database')
-const bcrypt = require('bcryptjs')
 require('dotenv').config()
 
 module.exports = {
@@ -14,6 +13,7 @@ module.exports = {
     getOrders: async (filter) => {
         try {
             let orderInfo = []
+            // If customer, get customer's orders
             if(filter) {
                 const user = await User.find(filter)
                 let userOrdersIDS = user[0].orderHistory;
@@ -26,13 +26,17 @@ module.exports = {
                     }
                 }
             } 
+            // else, is admin and gets all orders
             else {
                 orderInfo = await Order.find()
             }   
         return orderInfo
         } catch (err) {
-            console.log(err);
             return err
         }
-    }
+    },
+
+    clear: async () => {
+        return await Order.deleteMany({}, { multi: true })
+    },
 }

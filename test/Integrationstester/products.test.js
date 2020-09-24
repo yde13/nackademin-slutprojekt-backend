@@ -15,10 +15,7 @@ describe('Integration test on products', () => {
     before(async function () {
         await db.connect();
     });
-    after(async function () {
-        await db.disconnect();
-    });
-    before(async () => {
+    beforeEach(async () => {
         await productModel.clear()
 
         const users = await getTestUsers()
@@ -151,5 +148,8 @@ describe('Integration test on products', () => {
             expect(res).to.be.json
 
     })
+    after(async function () {
+        await db.disconnect();
+    });
 
 })

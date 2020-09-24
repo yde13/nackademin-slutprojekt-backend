@@ -18,15 +18,13 @@ module.exports = {
                 return await User.create(user);
             }
         } catch (error) {
-            console.log(error)
             return error
         }
     },
     addUserOrder: async (orderID, userID) => {
         try {
-            return await User.updateOne({_id: userID},{ $push: { orderHistory: orderID } });
+            return await User.updateOne({_id: userID}, { $push: { orderHistory: orderID } });
         } catch (error) {
-            console.log(error);
             return error
         }
     },
