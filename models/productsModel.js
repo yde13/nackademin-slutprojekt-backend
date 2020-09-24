@@ -40,7 +40,7 @@ module.exports = {
 
     deleteProductsModel: async (id) => {
         try {
-            const removed = await Products.deleteOne({_id : id});
+            const removed = await Products.deleteOne({ _id: id });
             return removed
         } catch (error) {
             return error
@@ -48,18 +48,20 @@ module.exports = {
     },
 
     clear: async () => {
-       return await Products.deleteMany({}, {multi: true}) 
+        return await Products.deleteMany({}, { multi: true })
     },
+
     calcOrderSum: async (productsArray) => {
         let totalSum = 0;
+        // get price for each product in the order, then return sum
         try {
             let products = await Products.find();
-            for(let i = 0; i < products.length; i++) {
-              for (let x = 0; x < productsArray.length; x++) {
-                  if(products[i]._id == productsArray[x]) {
-                      totalSum += products[i].price
-                  }
-              }     
+            for (let i = 0; i < products.length; i++) {
+                for (let x = 0; x < productsArray.length; x++) {
+                    if (products[i]._id == productsArray[x]) {
+                        totalSum += products[i].price
+                    }
+                }
             }
             return totalSum
         } catch (error) {

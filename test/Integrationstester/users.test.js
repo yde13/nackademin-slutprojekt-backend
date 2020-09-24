@@ -12,26 +12,31 @@ const {getTestUsers} = require('../testdata')
 const { connect,disconnect } = require('../../database/database')
 
 describe('Integration tests for Users', function () {
+
+    let users;
+    let loginPerson;
     before(async function() {
         await connect()
-        // await userModel.clearAllUsers()
-    })
+        users = await getTestUsers();        
+
+    })       
     beforeEach(async function() {
         await userModel.clearAllUsers()
-        const users = await getTestUsers()
 
+        loginPerson = {
+            email: users[0].email,
+            password: users[0].password
+        }  
 
         const loginObject = {
             email: users[1].email,
             password: users[1].password
         }
         this.currentTest.loginObject = loginObject
-        const addedUser = await userModel.addUser(users[0])
+        await userModel.addUser(users[0])
         this.currentTest.token = await authenticationModel.login(loginObject)
-        
     })
     it('Should add a user and login, integration', async function() {
-        const users = await getTestUsers()
        
         const res = await request(app)
         .post('/api/register')
@@ -43,11 +48,6 @@ describe('Integration tests for Users', function () {
     })
     
     it('Should login with a user', async function() {
-        const users = await getTestUsers()
-        const loginPerson = {
-            email: users[0].email,
-            password: users[0].password
-        } 
         
         const res = await request(app)
         .post('/api/auth')
@@ -58,7 +58,6 @@ describe('Integration tests for Users', function () {
      })
 
      it('Should fail to register as admin, integration', async function() {
-        const users = await getTestUsers()
         
         const res = await request(app)
         .post('/api/register')
@@ -69,8 +68,7 @@ describe('Integration tests for Users', function () {
     })
 
     it('Should fail to register with existing email, integration', async function() {
-        const users = await getTestUsers()
-        const addedUser = await userModel.addUser(users[3])
+        await userModel.addUser(users[3])
 
         const res = await request(app)
         .post('/api/register')

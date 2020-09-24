@@ -19,7 +19,7 @@ module.exports = {
         if (product) {
             res.status(200).json(product)
         } else {
-            res.status(401).json(product.msg)
+            res.status(401).json(product)
         }
     },
 
@@ -35,8 +35,7 @@ module.exports = {
         
         if(req.user.isAdmin()) {            
             let result = await model.addProductsModel(product)
-            result.message = "Product added"
-            res.status(200).json({product: result, message: "Product added"})
+            res.status(200).json({product: result})
         } else {
             res.status(401).send('You are not an Admin.');
         }

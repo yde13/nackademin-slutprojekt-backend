@@ -4,20 +4,19 @@ const {getTestProducts} = require('../testdata')
 require('chai').should()
 
 describe('Product', function () {
+    let product;
     before(async function () {
         await db.connect();
     });
-    after(async function () {
-        await db.disconnect();
-    });
+    
     beforeEach(async function () {
         await productsModel.clear()
+
+        product = await getTestProducts()
+        await productsModel.addProductsModel(product[0])        
     })
 
-    it('Should get all products', async function () {
-       
-        const products = await getTestProducts()
-        const result = await productsModel.addProductsModel(products[0])        
+    it('Should get all products', async function () {    
 
         const getProducts = await productsModel.getProductsModel()        
         
@@ -27,10 +26,9 @@ describe('Product', function () {
     })
 
     it('Should get a single product', async function () {
-        const products = await getTestProducts()
 
-        const result = await productsModel.addProductsModel(products[0])        
-
+        const result = await productsModel.addProductsModel(product[0])        
+        
         let id = result._id
         
         const getSingleProduct = await productsModel.getSingleProductModel(id)
@@ -41,9 +39,8 @@ describe('Product', function () {
     })
 
     it('Should add a product', async function () {
-        const products = await getTestProducts()
 
-        const addProduct = await productsModel.addProductsModel(products[0])
+        const addProduct = await productsModel.addProductsModel(product[0])
         
         addProduct.price.should.be.equal(100)
         addProduct.title.should.be.equal('Tröja')
@@ -51,26 +48,24 @@ describe('Product', function () {
     })
 
     it('Should edit a product', async function () {
-        const products = await getTestProducts()
-
-        const addProduct = await productsModel.addProductsModel(products[0])
+        const addProduct = await productsModel.addProductsModel(product[0])
 
         let id = addProduct._id        
 
-        const updateProduct = await productsModel.editProductsModel(id, products[1])
-
+        const updateProduct = await productsModel.editProductsModel(id, product[1])
         updateProduct.ok.should.equal(1) 
     })
 
     it('Should delete a product', async function () {
-        const products = await getTestProducts()
-
-        const addProduct = await productsModel.addProductsModel(products[0])
+        const addProduct = await productsModel.addProductsModel(product[0])
 
         let id = addProduct._id        
 
         const deleteProduct = await productsModel.deleteProductsModel(id)
-
         deleteProduct.ok.should.equal(1) 
     })
+
+    after(async function () {
+        await db.disconnect();
+    });
 })

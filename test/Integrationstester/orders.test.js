@@ -5,6 +5,7 @@ const {disconnect, connect} = require('../../database/database')
 const expect = chai.expect
 const authenticationModel = require('../../models/authenticationModel')
 const userModel = require('../../models/userModel')
+const orderModel = require('../../models/orderModel')
 const { getTestOrders, getTestUsers } = require('../testdata')
 const app = require('../../app.js')
 
@@ -13,21 +14,20 @@ describe('Integration test for orders', () => {
     let currentUser;
     before(async () => {
         await connect()
+    })
+    beforeEach(async () => {
+        await orderModel.clear();
+
         orders = await getTestOrders()
         let users = await getTestUsers()
         let loginObject = {
-            email: users[0].email,
-            password: users[0].password
+            email: users[2].email,
+            password: users[2].password
         }
-        let user = {
-            name: users[0].name,
-            password: users[0].password,
-            role: users[0].role || "customer",
-            email: users[0].email,
-            adress: users[0].adress
-        }
-        await userModel.addUser(user)
-        currentUser = await authenticationModel.login(loginObject)
+        await userModel.addUser(users[2])
+        currentUser = await authenticationModel.login(loginObject)    
+        
+        await orderModel.addOrder(orders[0])        
     })
 
     it('Should test out api order POST route without being logged in',  async () => {
@@ -51,7 +51,7 @@ describe('Integration test for orders', () => {
         const query = await chai.request(app)
             .get('/api/orders')
             .set('Authorization', `Bearer ${currentUser.token}`)
-            expect(query).to.have.status(200)
+            expect(query).to.have.status(200)            
             expect(query.body[0]).to.have.keys('items', '_id', 'timeStamp', 'status', 'orderValue', '__v')
     })
 
