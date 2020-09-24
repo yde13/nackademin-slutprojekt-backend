@@ -2,7 +2,8 @@ const userModel = require('../models/userModel');
 const authenticationModel = require('../models/authenticationModel')
 module.exports = {
     addUser: async (req, res) => {
-        if(req.body.password != req.body.repeatPassword) return res.status(400).json({errormsg: 'Incorect register format'})
+        if(req.body.password != req.body.repeatPassword)
+            return res.status(400).json({errormsg: 'Password does not match'})
         
         const user = {
             name: req.body.name,
@@ -24,18 +25,13 @@ module.exports = {
             const response = await authenticationModel.login(loginObject)
 
             if(response.token) { 
-                let status = addedUser ? 201 : 400
-                let msg = addedUser ? 'New account created' : 'That username already exists'
-                res.status(status).json(response)
+                res.status(201).json(response)
             } else {
                 res.status(401).json(response.msg)
             }
-
-        }
-
-        else {
+            
+        } else {
             res.status(400).json({errormsg: 'Incorect register format'})
         }
-       
     } 
 }

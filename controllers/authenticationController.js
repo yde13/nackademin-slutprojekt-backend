@@ -1,6 +1,5 @@
 require('dotenv').config();
 const authenticationModel = require('../models/authenticationModel')
-const secret = process.env.SECRET
 
 module.exports = {
     login: async (req, res) => {
@@ -14,16 +13,5 @@ module.exports = {
         } else {
             res.status(401).json(response.msg)
         }
-  
-    },
-    // checkToken: async(req, res) => {
-    //     const response = {
-    //         isLoggedIn : true,
-    //         userid: req.user.userId,
-    //         role: req.user.role,
-    //         username: req.user.username,
-    //         test: 'test'
-    //     }
-    //     res.status(200).json(response)
-    // }
+    }
 }
