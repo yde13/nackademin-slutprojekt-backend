@@ -1,15 +1,13 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server')
+
 let mongoDatabase
 
 switch (process.env.ENVIRONMENT) {
     case 'development':
+        mongoDatabase = new MongoMemoryServer();
 
-        mongoDatabase = {
-            getUri: async () =>
-                `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_TEST}?retryWrites=true&w=majority`
-        }
         connect()
         break;
     case 'test':
